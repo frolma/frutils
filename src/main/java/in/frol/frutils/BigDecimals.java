@@ -1,4 +1,4 @@
-package io.frol.frutils;
+package in.frol.frutils;
 
 import java.math.BigDecimal;
 import java.util.Comparator;
