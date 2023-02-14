@@ -11,7 +11,7 @@
     <scm>
         <connection>scm:git:git@github.com:frolma/frutils.git</connection>
         <developerConnection>scm:git:git@github.com:frolma/frutils.git</developerConnection>
-        <url>https://github.com/frolma/frutils</url>
+        <url>git@github.com:frolma/frutils.git</url>
       <tag>frutils-0.0.1</tag>
   </scm>
 
