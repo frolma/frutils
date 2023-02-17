@@ -3,17 +3,18 @@
 ![Maven Central](https://img.shields.io/maven-central/v/in.frol/frutils)
 ![GitHub](https://img.shields.io/github/license/frolma/frutils)
 
-&#9749; Requires JDK 17 or higher
-
 The library, with its simple methods/utilities,
 can help fill the gap in operations on various basic types
 and improve code cleanliness, while being implemented
 as pure functions and avoiding creating a dozen objects to check a simple condition.
 
+###### &#9749; Requires JDK 17 or higher
+
 ### Frutils assortment is as follows:
 
 - [Functions](#functions) - no-op lambdas, wrappers for non-checked exception and more
 - [BigDecimals](#bigdecimals) - checks, comparisons and so on
+- [UtilDates](#utildates) - util.Date and datetime API converters
 
 ## Functions
 
@@ -27,7 +28,7 @@ object.method(variable, collection, (val) -> {
 }, (val) -> val);
 ```
 
-with `Functions` is better
+with `Functions` is better:
 
 ```
 object.method(variable, collection, doNothing(), justReturn());
@@ -75,3 +76,7 @@ anyNull(variable1, variable2, variable3, variable4)
 ```
 
 ## To be continued...
+
+---
+
+###### C'est a table d'hôte, pas à la carte.
