@@ -12,7 +12,7 @@ as pure functions and avoiding creating a dozen objects to check a simple condit
 
 ### Frutils assortment is as follows:
 
-- [Objects](#objects) - Methods à la SQL Server's COALESCE or ORACLE's NVL and other ISNULL functions,
+- [Objects](#objects) - methods à la SQL Server's COALESCE or ORACLE's NVL and other ISNULL functions,
   in a convenient, concise and static "pack" for Java with lazy extensions.
 - [Functions](#functions) - no-op lambdas, wrappers for non-checked exception and more
 - [BigDecimals](#bigdecimals) - checks, comparisons and so on
@@ -20,7 +20,7 @@ as pure functions and avoiding creating a dozen objects to check a simple condit
 
 ## Objects
 
-There are only a few ways to check for null in business logic in Java:
+###### There are only a few ways to check for null in business logic in Java:
 
 - The old-fashioned way, verbose and explicit in the code with ifs.
 - Or we can cover all variables with Optional objects, many do, but the purpose of Optional is "...primarily intended
@@ -36,7 +36,7 @@ neNull(nullRef, nonNullRef);                 //result: nonNullRef
 
 neNull(nonNullRef1, nonNullRef2);            //result: nonNullRef1
 
-neNull(nullRef, "defaultValue");             //result: "default"
+neNull(nullRef, "default");                  //result: "default"
 
 neNull(nullRef, nonNullRef, "defaultValue"); //result: nonNullRef
 ```
@@ -71,8 +71,7 @@ allNull(..), allNotNull(..), anyNotNull(..), anyNull(..) ... etc.
 
 ## Functions
 
-third-party methods with consumer, function and your plugs,
-after formatting is worse:
+###### third-party methods with consumer, function and your plugs, after formatting is worse:
 
 ```
 object.method(variable, collection, (val) -> {}, (val) -> val);
@@ -81,7 +80,7 @@ object.method(variable, collection, (val) -> {
 }, (val) -> val);
 ```
 
-with `Functions` is better:
+###### with `Functions` is better:
 
 ```
 object.method(variable, collection, doNothing(), justReturn());
@@ -89,7 +88,7 @@ object.method(variable, collection, doNothing(), justReturn());
 object.method(variable, collection, emptyConsumer(), emptyUnaryOperator());
 ```
 
-wrapper for `unchecked` exceptions in functions and other interfaces would also be useful:
+###### wrapper for `unchecked` exceptions in functions and other interfaces would also be useful:
 
 ```
 ... .map(service::uncheckedFunction) // сompilation error
@@ -103,7 +102,7 @@ wrapper for `unchecked` exceptions in functions and other interfaces would also 
 
 ## BigDecimals
 
-often operations with `BigDecimal` are left in the code like this:
+###### often operations with `BigDecimal` are left in the code like this:
 
 ```
 BigDecimal variable = ...
@@ -122,7 +121,7 @@ variable1 == null || variable2 == null || variable3 == null || var...
 
 ```
 
-`BigDecimals` methods tidy this up:
+###### `BigDecimals` methods tidy this up:
 
 ```
 isNegative(variable)
