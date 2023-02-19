@@ -3,7 +3,6 @@ package in.frol.frutils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.math.BigDecimal;
@@ -13,86 +12,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("Date Utils:")
 class BigDecimalsTest {
-
-    @ParameterizedTest
-    @NullSource
-    void isNullTrue(final BigDecimal value) {
-        assertTrue(BigDecimals.isNull(value));
-    }
-
-    @ParameterizedTest
-    @ValueSource(strings = {"0.", ".0", "0.0", "0.0", "1", "0"})
-    void isNullFalse(final BigDecimal value) {
-        assertFalse(BigDecimals.isNull(value));
-    }
-
-    @ParameterizedTest
-    @CsvSource(value = {
-            "1.0, 9.2, null",
-            "null, 2.2, 3",
-            "null, null, 7.3",
-    }, nullValues = "null")
-    void anyNullTrue(final BigDecimal val1, final BigDecimal val2, final BigDecimal val3) {
-        assertTrue(BigDecimals.anyNull(val1, val2, val3));
-    }
-
-    @ParameterizedTest
-    @CsvSource(value = {
-            "1.8, 9.0, 4.4",
-            "0.0, 0., .0",
-            "1, 0, 3",
-    })
-    void anyNullFalse(final BigDecimal val1, final BigDecimal val2, final BigDecimal val3) {
-        assertFalse(BigDecimals.anyNull(val1, val2, val3));
-    }
-
-    @ParameterizedTest
-    @CsvSource(value = {"null, null, null"}, nullValues = "null")
-    void allNullTrue(final BigDecimal val1, final BigDecimal val2, final BigDecimal val3) {
-        assertTrue(BigDecimals.allNull(val1, val2, val3));
-    }
-
-    @ParameterizedTest
-    @CsvSource(value = {
-            "null, null, 4.4",
-            "0.0, 0., .0, null",
-            "null, 0, null",
-    }, nullValues = "null")
-    void allNullFalse(final BigDecimal val1, final BigDecimal val2, final BigDecimal val3) {
-        assertFalse(BigDecimals.allNull(val1, val2, val3));
-    }
-
-    @ParameterizedTest
-    @CsvSource(value = {
-            "1.8, 9.0, 4.4",
-            "0.0, 0., .0",
-            "1, 0, 3",
-    })
-    void allNotNullTrue(final BigDecimal val1, final BigDecimal val2, final BigDecimal val3) {
-        assertTrue(BigDecimals.allNotNull(val1, val2, val3));
-    }
-
-    @ParameterizedTest
-    @CsvSource(value = {
-            "1.8, null, 4.4",
-            "0.0, 0., null",
-            "1, 0, null",
-    }, nullValues = "null")
-    void allNotNullFalse(final BigDecimal val1, final BigDecimal val2, final BigDecimal val3) {
-        assertFalse(BigDecimals.allNotNull(val1, val2, val3));
-    }
-
-    @ParameterizedTest
-    @ValueSource(strings = {"0.", ".0", "0.0", "0.0", "1", "0"})
-    void notNullTrue(final BigDecimal value) {
-        assertTrue(BigDecimals.notNull(value));
-    }
-
-    @ParameterizedTest
-    @NullSource
-    void notNullFalse(final BigDecimal value) {
-        assertFalse(BigDecimals.notNull(value));
-    }
 
     @ParameterizedTest
     @ValueSource(strings = {"0.", ".0", "0.0", "0.0", "000.00000", "0"})

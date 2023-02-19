@@ -11,7 +11,7 @@ import java.util.Date;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@DisplayName("java.util.Date Utils:")
+@DisplayName("UtilDates (java.util.Date) Utils:")
 class UtilDatesTest {
 
     /* Fri Sep 10 23:51:23 UTC 1976 */

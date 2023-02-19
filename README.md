@@ -12,9 +12,62 @@ as pure functions and avoiding creating a dozen objects to check a simple condit
 
 ### Frutils assortment is as follows:
 
+- [Objects](#objects) - Methods à la SQL Server's COALESCE or ORACLE's NVL and other ISNULL functions,
+  in a convenient, concise and static "pack" for Java with lazy extensions.
 - [Functions](#functions) - no-op lambdas, wrappers for non-checked exception and more
 - [BigDecimals](#bigdecimals) - checks, comparisons and so on
 - [UtilDates](#utildates) - util.Date and datetime API converters
+
+## Objects
+
+There are only a few ways to check for null in business logic in Java:
+
+- The old-fashioned way, verbose and explicit in the code with ifs.
+- Or we can cover all variables with Optional objects, many do, but the purpose of Optional is "...primarily intended
+  for use as a method return type", and the Oracle docs originally promoted it - "...the purpose of Optional is not to
+  replace every single null reference in your codebase, but rather to help design better APIs...". And it's no fun when
+  Optionals are created in a loop with millions of iterations or inside streams...
+- And you can also use handy static methods, which is exactly what *Frutils* `Objects` suggest:
+
+###### Objects.neNull - Not Equal to Null, selects the first arg with a !null value:
+
+```
+neNull(nullRef, nonNullRef);                 //result: nonNullRef
+
+neNull(nonNullRef1, nonNullRef2);            //result: nonNullRef1
+
+neNull(nullRef, "defaultValue");             //result: "default"
+
+neNull(nullRef, nonNullRef, "defaultValue"); //result: nonNullRef
+```
+
+###### Lazy implementations, with Function for non-null argument:
+
+```
+neNull(nullRef, SomeNonNullClass::getField); //result: null
+
+neNull(nonNullRef, Class::getFoo);           //result: value of field 'foo' from 'nonNullRef'
+```        
+
+###### and Supplier for null argument (including varargs):
+
+```
+neNull(nullRef, consumer);                                           //result: result from consumer
+
+neNull(nullRef, () -> obtainDefaultValue());                         //result: defaultValue
+
+neNull(nullRef, () -> getNullRef(), () -> getDefaultRef2(), ...);    //result: defaultRef2
+
+neNull(nullRef, consumerGetNull, consumerGetDefault);                //result: default
+
+neNull(nonNullRef, () -> getNullRef(), () -> getDefaultRef2(), ...); //result: nonNullRef
+```
+
+###### To avoid creating a Stream, Filters, Buckets, etc. are also shown:
+
+```
+allNull(..), allNotNull(..), anyNotNull(..), anyNull(..) ... etc.
+```
 
 ## Functions
 
@@ -54,13 +107,18 @@ often operations with `BigDecimal` are left in the code like this:
 
 ```
 BigDecimal variable = ...
+
 variable.signum() < 0
+
 variable.signum() >= 0
+
 variable == null || variable.compareTo(BigDecimal.ZERO) == 0
+
 variable != null && variable.compareTo(BigDecimal.ZERO) != 0
+
 variable1.compareTo(variable2) >= 0
+
 variable1 == null || variable2 == null || variable3 == null || var...
-or Stream.of(variable1, variable2, variable3, variable4).anyMatch(...
 
 ```
 
@@ -68,12 +126,17 @@ or Stream.of(variable1, variable2, variable3, variable4).anyMatch(...
 
 ```
 isNegative(variable)
+
 notNegative(variable)
+
 isNullOrZero(variable)
+
 neitherNullNorZero(variable)
+
 greaterOrEquals(variable1, variable2)
-anyNull(variable1, variable2, variable3, variable4)
 ```
+
+## UtilDates
 
 ## To be continued...
 
