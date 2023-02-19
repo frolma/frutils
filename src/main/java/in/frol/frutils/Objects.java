@@ -52,6 +52,53 @@ public class Objects {
                 : functionForNotNull.apply(firstValue);
     }
 
+    /** Extended version of NotEqual Null - {@link Objects#neNull(Object, Function) } */
+    public static <V, F, S> S neNull(final V firstValue,
+                                     final Function<V, F> firstFunction,
+                                     final Function<F, S> secondFunction) {
+        if (firstValue == null) {
+            return null;
+        }
+        if (firstFunction == null) {
+            return null;
+        }
+        F firstFunctionResult = firstFunction.apply(firstValue);
+        if (firstFunctionResult == null) {
+            return null;
+        }
+        return secondFunction == null
+                ? null
+                : secondFunction.apply(firstFunctionResult);
+    }
+
+    /** Extended version of NotEqual Null - {@link Objects#neNull(Object, Function) } */
+    public static <V, F, S, T> T neNull(final V firstValue,
+                                        final Function<V, F> firstFunction,
+                                        final Function<F, S> secondFunction,
+                                        final Function<S, T> thirdFunction) {
+        if (firstValue == null) {
+            return null;
+        }
+        if (firstFunction == null) {
+            return null;
+        }
+        F firstFunctionResult = firstFunction.apply(firstValue);
+        if (firstFunctionResult == null) {
+            return null;
+        }
+        if (secondFunction == null) {
+            return null;
+        }
+        S secondFunctionResult = secondFunction.apply(firstFunctionResult);
+        if (secondFunctionResult == null) {
+            return null;
+        }
+        if (thirdFunction == null) {
+            return null;
+        }
+        return thirdFunction.apply(secondFunctionResult);
+    }
+
     /**
      * If the parameter is null then returns the result of the Supplier
      *

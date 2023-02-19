@@ -23,15 +23,40 @@ class ObjectsTest {
 
     static final Object TEST_OBJECT_A = new Object();
     static final Object TEST_OBJECT_B = new Object();
+    static final Object TEST_OBJECT_C = new Object();
+    static final Object TEST_OBJECT_D = new Object();
     static final Object TEST_FUNCTION_RESULT = new Object();
     static final Function<?, ?> TEST_FUNCTION = val -> TEST_FUNCTION_RESULT;
     static final Function<?, ?> TEST_FUNCTION_RETURN = val -> val;
     static final Function<?, ?> TEST_FUNCTION_A_IF_B_OR_NULL = val -> val == TEST_OBJECT_B ? TEST_OBJECT_A : null;
     static final Function<?, ?> TEST_FUNCTION_B_IF_A_OR_NULL = val -> val == TEST_OBJECT_A ? TEST_OBJECT_B : null;
+    static final Function<?, ?> TEST_FUNCTION_B_IF_C_OR_NULL = val -> val == TEST_OBJECT_C ? TEST_OBJECT_B : null;
+    static final Function<?, ?> TEST_FUNCTION_C_IF_B_OR_NULL = val -> val == TEST_OBJECT_B ? TEST_OBJECT_C : null;
+    static final Function<?, ?> TEST_FUNCTION_D_IF_C_OR_NULL = val -> val == TEST_OBJECT_C ? TEST_OBJECT_D : null;
     static final Object TEST_SUPPLIER_RESULT = new Object();
     static final Supplier<?> TEST_SUPPLIER = () -> TEST_SUPPLIER_RESULT;
     static final Supplier<?> TEST_SUPPLIER_A = () -> TEST_OBJECT_A;
     static final Supplier<?> TEST_SUPPLIER_B = () -> TEST_OBJECT_B;
+
+    static Stream<Arguments> sourceTestNeNullWithFunction3() {
+        return Stream.of(
+                of(null, null, null, null, null),
+                of(null, TEST_FUNCTION_B_IF_A_OR_NULL, TEST_FUNCTION_C_IF_B_OR_NULL, TEST_FUNCTION_D_IF_C_OR_NULL, null),
+                of(TEST_OBJECT_B, TEST_FUNCTION_B_IF_A_OR_NULL, TEST_FUNCTION_C_IF_B_OR_NULL, TEST_FUNCTION_D_IF_C_OR_NULL, null),
+                of(TEST_OBJECT_A, TEST_FUNCTION_B_IF_A_OR_NULL, TEST_FUNCTION_C_IF_B_OR_NULL, TEST_FUNCTION_D_IF_C_OR_NULL, TEST_OBJECT_D)
+        );
+    }
+
+    static Stream<Arguments> sourceTestNeNullWithFunction2() {
+        return Stream.of(
+                of(null, null, null, null),
+                of(null, TEST_FUNCTION_B_IF_A_OR_NULL, TEST_FUNCTION_C_IF_B_OR_NULL, null),
+                of(TEST_OBJECT_B, TEST_FUNCTION_B_IF_A_OR_NULL, TEST_FUNCTION_C_IF_B_OR_NULL, null),
+                of(TEST_OBJECT_A, TEST_FUNCTION_B_IF_A_OR_NULL, TEST_FUNCTION_B_IF_A_OR_NULL, null),
+                of(TEST_OBJECT_A, TEST_FUNCTION_B_IF_A_OR_NULL, TEST_FUNCTION_C_IF_B_OR_NULL, TEST_OBJECT_C),
+                of(TEST_OBJECT_C, TEST_FUNCTION_B_IF_C_OR_NULL, TEST_FUNCTION_A_IF_B_OR_NULL, TEST_OBJECT_A)
+        );
+    }
 
     static Stream<Arguments> sourceTestNeNullWithFunction() {
         return Stream.of(
@@ -104,6 +129,20 @@ class ObjectsTest {
     @MethodSource("sourceTestNeNullWithFunction")
     void testNeNullWithFunction(Object val, Function function, Object result) {
         assertEquals(result, Objects.neNull(val, function));
+    }
+
+    @SuppressWarnings("ALL")
+    @ParameterizedTest
+    @MethodSource("sourceTestNeNullWithFunction2")
+    void testNeNullWithFunction2(Object val, Function function1, Function function2, Object result) {
+        assertEquals(result, Objects.neNull(val, function1, function2));
+    }
+
+    @SuppressWarnings("ALL")
+    @ParameterizedTest
+    @MethodSource("sourceTestNeNullWithFunction3")
+    void testNeNullWithFunction3(Object val, Function function1, Function function2, Function function3, Object result) {
+        assertEquals(result, Objects.neNull(val, function1, function2, function3));
     }
 
     @SuppressWarnings("ALL")

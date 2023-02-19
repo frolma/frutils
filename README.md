@@ -16,6 +16,7 @@ as pure functions and avoiding creating a dozen objects to check a simple condit
   in a convenient, concise and static "pack" for Java with lazy extensions.
 - [Functions](#functions) - no-op lambdas, wrappers for non-checked exception and more
 - [BigDecimals](#bigdecimals) - checks, comparisons and so on
+- [Collections](#collections) - checks ifnull, empty and split list into chunks
 - [UtilDates](#utildates) - util.Date and datetime API converters
 
 ## Objects
@@ -47,6 +48,12 @@ neNull(nullRef, nonNullRef, "defaultValue"); //result: nonNullRef
 neNull(nullRef, SomeNonNullClass::getField); //result: null
 
 neNull(nonNullRef, Class::getFoo);           //result: value of field 'foo' from 'nonNullRef'
+
+neNull(value, BigDecimal::new, BigDecimal::negate, BigDecimal::toEngineeringString);
+neNull(previousResult, "N/A");               //result: transformed value
+
+neNull(null, BigDecimal::new, BigDecimal::negate, BigDecimal::toEngineeringString);
+neNull(previousResult, "N/A");               //result: "N/A"
 ```        
 
 ###### and Supplier for null argument (including varargs):
@@ -116,9 +123,6 @@ variable == null || variable.compareTo(BigDecimal.ZERO) == 0
 variable != null && variable.compareTo(BigDecimal.ZERO) != 0
 
 variable1.compareTo(variable2) >= 0
-
-variable1 == null || variable2 == null || variable3 == null || var...
-
 ```
 
 ###### `BigDecimals` methods tidy this up:
@@ -135,7 +139,22 @@ neitherNullNorZero(variable)
 greaterOrEquals(variable1, variable2)
 ```
 
+## Collections
+
+```
+isEmpty(list)
+notEmpty(list)
+
+isEmpty(map)
+notEmpty(map)
+
+toChunks(list, chunkSize)
+etc...
+```
+
 ## UtilDates
+
+###### Converters for java.util.Date if unfortunately you have to use it
 
 ## To be continued...
 
