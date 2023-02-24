@@ -6,19 +6,31 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static java.util.stream.Collectors.toCollection;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("Collections Utils:")
 class CollectionsTest {
 
-    private static final List<Integer> INT_LIST = IntStream.range(1, 90).boxed().toList();
-    private static final List<String> STRING_LIST = IntStream.range(1, 90).mapToObj(Integer::toString).toList();
+    private static final Integer START_INCLUSIVE = 1;
+    private static final Integer END_EXCLUSIVE = 90;
+    private static final Integer END_INCLUSIVE = END_EXCLUSIVE - 1;
+
+    private static final List<Integer> INT_LIST = IntStream.range(START_INCLUSIVE, END_EXCLUSIVE).boxed().toList();
+    private static final List<String> STRING_LIST = IntStream.range(START_INCLUSIVE, END_EXCLUSIVE).mapToObj(Integer::toString).toList();
+    private static final Set<Integer> INT_SET = IntStream.range(START_INCLUSIVE, END_EXCLUSIVE).boxed().collect(Collectors.toSet());
+    private static final Set<String> STRING_SET = IntStream.range(START_INCLUSIVE, END_EXCLUSIVE).mapToObj(Integer::toString)
+            .collect(toCollection(LinkedHashSet::new));
 
     @Test
     @SuppressWarnings("ALL")
@@ -27,10 +39,10 @@ class CollectionsTest {
         final Collection<?> empty = new ArrayList<>();
         final Collection<?> listOf = List.of();
         final Collection<?> nonEmptyList = List.of(new Object());
-        assertTrue(Collections.isEmpty(nullList));
-        assertTrue(Collections.isEmpty(empty));
-        assertTrue(Collections.isEmpty(listOf));
-        assertFalse(Collections.isEmpty(nonEmptyList));
+        assertTrue(Collections.hasNoItems(nullList));
+        assertTrue(Collections.hasNoItems(empty));
+        assertTrue(Collections.hasNoItems(listOf));
+        assertFalse(Collections.hasNoItems(nonEmptyList));
     }
 
     @Test
@@ -40,10 +52,10 @@ class CollectionsTest {
         final Collection<?> empty = new ArrayList<>();
         final Collection<?> listOf = List.of();
         final Collection<?> nonEmptyList = List.of(new Object());
-        assertFalse(Collections.notEmpty(nullList));
-        assertFalse(Collections.notEmpty(empty));
-        assertFalse(Collections.notEmpty(listOf));
-        assertTrue(Collections.notEmpty(nonEmptyList));
+        assertFalse(Collections.hasItems(nullList));
+        assertFalse(Collections.hasItems(empty));
+        assertFalse(Collections.hasItems(listOf));
+        assertTrue(Collections.hasItems(nonEmptyList));
     }
 
     @Test
@@ -53,10 +65,10 @@ class CollectionsTest {
         final Map<?, ?> empty = new HashMap<>();
         final Map<?, ?> mapOf = new HashMap<>();
         final Map<String, Object> nonEmptyMap = Map.of("key", new Object());
-        assertTrue(Collections.isEmpty(nullMap));
-        assertTrue(Collections.isEmpty(empty));
-        assertTrue(Collections.isEmpty(mapOf));
-        assertFalse(Collections.isEmpty(nonEmptyMap));
+        assertTrue(Collections.hasNoItems(nullMap));
+        assertTrue(Collections.hasNoItems(empty));
+        assertTrue(Collections.hasNoItems(mapOf));
+        assertFalse(Collections.hasNoItems(nonEmptyMap));
     }
 
     @Test
@@ -66,10 +78,10 @@ class CollectionsTest {
         final Map<?, ?> empty = new HashMap<>();
         final Map<?, ?> mapOf = new HashMap<>();
         final Map<String, Object> nonEmptyMap = Map.of("key", new Object());
-        assertFalse(Collections.notEmpty(nullMap));
-        assertFalse(Collections.notEmpty(empty));
-        assertFalse(Collections.notEmpty(mapOf));
-        assertTrue(Collections.notEmpty(nonEmptyMap));
+        assertFalse(Collections.hasItems(nullMap));
+        assertFalse(Collections.hasItems(empty));
+        assertFalse(Collections.hasItems(mapOf));
+        assertTrue(Collections.hasItems(nonEmptyMap));
     }
 
     @Test
@@ -84,5 +96,45 @@ class CollectionsTest {
         var chunks = Collections.toChunks(STRING_LIST, 10);
         assertEquals(9, chunks.size());
         assertEquals(STRING_LIST.subList(0, 10), chunks.get(0));
+    }
+
+    @Test
+    @SuppressWarnings("ALL")
+    void firstItemFromSet() {
+        Set set = null;
+        assertNull(Collections.firstItem(set));
+        assertNull(Collections.firstItem(Set.of()));
+        assertEquals(START_INCLUSIVE.toString(), Collections.firstItem(STRING_SET));
+        assertEquals(START_INCLUSIVE, Collections.firstItem(INT_SET));
+    }
+
+    @Test
+    @SuppressWarnings("ALL")
+    void firstItemFromList() {
+        final List list = null;
+        assertNull(Collections.firstItem(list));
+        assertNull(Collections.firstItem(List.of()));
+        assertEquals(START_INCLUSIVE.toString(), Collections.firstItem(STRING_LIST));
+        assertEquals(START_INCLUSIVE, Collections.firstItem(INT_LIST));
+    }
+
+    @Test
+    @SuppressWarnings("ALL")
+    void lastItemFromSet() {
+        final Set set = null;
+        assertNull(Collections.lastItem(set));
+        assertNull(Collections.lastItem(Set.of()));
+        assertEquals(END_INCLUSIVE.toString(), Collections.lastItem(STRING_SET));
+        assertEquals(END_INCLUSIVE, Collections.lastItem(INT_SET));
+    }
+
+    @Test
+    @SuppressWarnings("ALL")
+    void lastItemFromList() {
+        List list = null;
+        assertNull(Collections.lastItem(list));
+        assertNull(Collections.lastItem(List.of()));
+        assertEquals(END_INCLUSIVE.toString(), Collections.lastItem(STRING_LIST));
+        assertEquals(END_INCLUSIVE, Collections.lastItem(INT_LIST));
     }
 }

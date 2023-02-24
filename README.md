@@ -173,13 +173,25 @@ greaterOrEquals(variable1, variable2)
 ## Collections
 
 ```
-isEmpty(list)
-notEmpty(list)
+hasItems(<collection or map>)
+hasItems(<null or empty>) == false
+hasItems(<collection or map with any item(s)>) == true
 
-isEmpty(map)
-notEmpty(map)
+hasNoItems(<collection or map>)
+hasNoItems(<null or empty>) == true
+hasNoItems(<collection or map with any item(s)>) == false
+
+firstItem(<list or set>)
+firstItem(List.of(1, 2, 3)) == 1
+firstItem(Set.of("a", "b", "c")) == "a"
+
+lastItem(<list or set>)
+lastItem(List.of(1, 2, 3)) == 3
+lastItem(Set.of("a", "b", "c")) == "c"
 
 toChunks(list, chunkSize)
+toChunks(List.of(1,2,3,4,5), 3) == List.of(List.of(1,2,3), List.of(4,5)) 
+
 etc...
 ```
 
