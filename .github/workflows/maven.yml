@@ -31,6 +31,6 @@ jobs:
     - name: 📦 Build with Maven
       run: mvn --batch-mode --update-snapshots test jacoco:report
     - name: 🚀 Coveralls Coverage Report Submission
-      run: mvn coveralls:report --define repoToken=${{ secrets.COVERALL_REPO_TOKEN }}
-      env:
-        COVERALL_REPO_TOKEN: ${{ secrets.COVERALL_REPO_TOKEN }}
+      run: mvn coveralls:report --define repoToken=${{ secrets.COVERALL_REPO_SECRET }}
+#      env:
+#        COVERALL_REPO_TOKEN: ${{ secrets.COVERALL_REPO_SECRET }}
