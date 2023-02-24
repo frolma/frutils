@@ -38,6 +38,25 @@ public class Objects {
 
     /**
      * Applies the function/extractor to a non-null
+     * object and returns the result otherwise supplier
+     * <p>
+     * neNull()
+     */
+    public static <T, R> R neNull(final T firstValue,
+                                  final Function<T, R> functionForNotNull,
+                                  final Supplier<R> supplierIfNull) {
+        if (firstValue == null) {
+            return supplierIfNull == null
+                    ? null
+                    : supplierIfNull.get();
+        }
+        return functionForNotNull == null
+                ? null
+                : functionForNotNull.apply(firstValue);
+    }
+
+    /**
+     * Applies the function/extractor to a non-null
      * object and returns the result otherwise null
      * <p>
      * neNull()

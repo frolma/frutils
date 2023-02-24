@@ -31,7 +31,7 @@ as pure functions and avoiding creating a dozen objects to check a simple condit
 </dependency>
 
 // Gradle Kotlin DSL
-implementation("in.frol:frutils:0.0.2")
+implementation("in.frol:frutils:0.0.3")
 ```
 
 ## Objects
@@ -48,6 +48,8 @@ implementation("in.frol:frutils:0.0.2")
 ###### Objects.neNull - Not Equal to Null, selects the first arg with a !null value:
 
 ```
+neNull(<returns the first non-null value in the row, ...>);
+
 neNull(nullRef, nonNullRef);                 //result: nonNullRef
 
 neNull(nonNullRef1, nonNullRef2);            //result: nonNullRef1
@@ -57,24 +59,38 @@ neNull(nullRef, "default");                  //result: "default"
 neNull(nullRef, nonNullRef, "defaultValue"); //result: nonNullRef
 ```
 
-###### Lazy implementations, with Function for non-null argument:
+###### If the value is not null, then apply the Function to it otherwise the value from the Supplier
 
 ```
-neNull(nullRef, SomeNonNullClass::getField); //result: null
+neNull(<val>, <function if val not null>, <supplier if val is null>);
 
-neNull(nonNullRef, Class::getFoo);           //result: value of field 'foo' from 'nonNullRef'
+neNull(valueNonNull, service::processValue, service::getBackupData); //result: processed value
+
+neNull(valueNull, service::processValue, service::getBackupData); //result: default value
+```
+
+###### Other options with lazy implementations, with Function for non-null argument:
+
+```
+neNull(<val>, <function if val not null>);
+
+neNull(refNull, Foo::getBar);               //result: null
+
+neNull(refNonNull, Foo::getBar);            //result: value of field 'bar' from 'refNonNull'
 
 neNull(value, BigDecimal::new, BigDecimal::negate, BigDecimal::toEngineeringString);
 neNull(previousResult, "N/A");               //result: transformed value
 
 neNull(null, BigDecimal::new, BigDecimal::negate, BigDecimal::toEngineeringString);
 neNull(previousResult, "N/A");               //result: "N/A"
-```        
+```
 
-###### and Supplier for null argument (including varargs):
+###### and just Supplier for null argument (including varargs):
 
 ```
-neNull(nullRef, consumer);                                           //result: result from consumer
+neNull(<val>, <supplier if val is null>);
+
+neNull(nullRef, supplier);                                           //result: result from supplier
 
 neNull(nullRef, () -> obtainDefaultValue());                         //result: defaultValue
 

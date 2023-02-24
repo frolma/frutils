@@ -37,6 +37,26 @@ class ObjectsTest {
     static final Supplier<?> TEST_SUPPLIER = () -> TEST_SUPPLIER_RESULT;
     static final Supplier<?> TEST_SUPPLIER_A = () -> TEST_OBJECT_A;
     static final Supplier<?> TEST_SUPPLIER_B = () -> TEST_OBJECT_B;
+    static final Supplier<?> TEST_SUPPLIER_C = () -> TEST_OBJECT_C;
+
+    static Stream<Arguments> sourceTestNeNullWithFunctionAndSupplier() {
+        return Stream.of(
+                of(null, null, null, null),
+                of(TEST_OBJECT_A, null, null, null),
+                of(TEST_OBJECT_A, TEST_FUNCTION_B_IF_A_OR_NULL, null, TEST_OBJECT_B),
+                of(null, TEST_FUNCTION_B_IF_A_OR_NULL, null, null),
+                of(null, TEST_FUNCTION_B_IF_A_OR_NULL, null, null),
+                of(null, null, TEST_SUPPLIER_C, TEST_OBJECT_C),
+                of(TEST_SUPPLIER_B, null, TEST_SUPPLIER_C, null),
+                of(TEST_OBJECT_B, TEST_FUNCTION_B_IF_A_OR_NULL, TEST_SUPPLIER_C, null),
+                of(TEST_OBJECT_A, TEST_FUNCTION_B_IF_A_OR_NULL, TEST_SUPPLIER_C, TEST_OBJECT_B),
+                of(null, TEST_FUNCTION_B_IF_A_OR_NULL, TEST_SUPPLIER_C, TEST_OBJECT_C),
+                of(TEST_OBJECT_B, TEST_FUNCTION_A_IF_B_OR_NULL, TEST_SUPPLIER_C, TEST_OBJECT_A),
+                of(null, TEST_FUNCTION_A_IF_B_OR_NULL, TEST_SUPPLIER_C, TEST_OBJECT_C),
+                of(TEST_OBJECT_C, TEST_FUNCTION_B_IF_C_OR_NULL, TEST_SUPPLIER_C, TEST_OBJECT_B),
+                of(null, TEST_FUNCTION_B_IF_C_OR_NULL, TEST_SUPPLIER_C, TEST_OBJECT_C)
+        );
+    }
 
     static Stream<Arguments> sourceTestNeNullWithFunction3() {
         return Stream.of(
@@ -129,6 +149,13 @@ class ObjectsTest {
     @MethodSource("sourceTestNeNullWithFunction")
     void testNeNullWithFunction(Object val, Function function, Object result) {
         assertEquals(result, Objects.neNull(val, function));
+    }
+
+    @SuppressWarnings("ALL")
+    @ParameterizedTest
+    @MethodSource("sourceTestNeNullWithFunctionAndSupplier")
+    void testNeNullWithFunctionAndSupplier(Object val, Function function, Supplier supplier, Object result) {
+        assertEquals(result, Objects.neNull(val, function, supplier));
     }
 
     @SuppressWarnings("ALL")
