@@ -1,6 +1,6 @@
 # :tangerine:Frutils: simple utility library for Java
 
-![Maven Central](https://img.shields.io/maven-central/v/in.frol/frutils)
+[![Maven Central](https://img.shields.io/maven-central/v/in.frol/frutils.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22in.frol%22%20AND%20a:%22frutils%22)
 ![GitHub](https://img.shields.io/github/license/frolma/frutils)
 
 The library, with its simple methods/utilities,
@@ -18,6 +18,19 @@ as pure functions and avoiding creating a dozen objects to check a simple condit
 - [BigDecimals](#bigdecimals) - checks, comparisons and so on
 - [Collections](#collections) - checks ifnull, empty and split list into chunks
 - [UtilDates](#utildates) - util.Date and datetime API converters
+
+**Just add the following snippet to dependencies:**
+```
+// Apache Maven
+<dependency>
+    <groupId>in.frol</groupId>
+    <artifactId>frutils</artifactId>
+    <version>0.0.3</version>
+</dependency>
+
+// Gradle Kotlin DSL
+implementation("in.frol:frutils:0.0.2")
+```
 
 ## Objects
 
