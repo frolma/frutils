@@ -1,6 +1,7 @@
 # :tangerine:Frutils: simple utility library for Java
 
 [![Maven Central](https://img.shields.io/maven-central/v/in.frol/frutils.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22in.frol%22%20AND%20a:%22frutils%22)
+[![Coverage Status](https://coveralls.io/repos/github/frolma/frutils/badge.svg)](https://coveralls.io/github/frolma/frutils)
 ![GitHub](https://img.shields.io/github/license/frolma/frutils)
 
 The library, with its simple methods/utilities,
@@ -20,6 +21,7 @@ as pure functions and avoiding creating a dozen objects to check a simple condit
 - [UtilDates](#utildates) - util.Date and datetime API converters
 
 **Just add the following snippet to dependencies:**
+
 ```
 // Apache Maven
 <dependency>
