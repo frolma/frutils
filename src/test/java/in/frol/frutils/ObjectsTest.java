@@ -1,6 +1,7 @@
 package in.frol.frutils;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -13,6 +14,7 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -446,5 +448,32 @@ class ObjectsTest {
     @NullSource
     void notNullFalse(final BigDecimal value) {
         assertFalse(Objects.nonNull(value));
+    }
+
+    @Test
+    void neNullRunnableAndSupplier() {
+        final int[] intArray = new int[3];
+
+        assertArrayEquals(new int[]{0, 0, 0}, intArray);
+
+        final Runnable integerRunnable = () -> intArray[1] = 1;
+        Objects.neNull("non null value", integerRunnable);
+
+        assertArrayEquals(new int[]{0, 0, 0}, intArray);
+
+        Objects.neNull(null, integerRunnable);
+
+        assertArrayEquals(new int[]{0, 1, 0}, intArray);
+
+        final Supplier<Integer> integerSupplier = () -> intArray[0] = 1;
+        var supplierResult = Objects.neNull("non null value", integerSupplier);
+        assertEquals("non null value", supplierResult);
+
+        assertArrayEquals(new int[]{0, 1, 0}, intArray);
+
+        supplierResult = Objects.neNull(null, integerSupplier);
+        assertEquals(1, supplierResult);
+
+        assertArrayEquals(new int[]{1, 1, 0}, intArray);
     }
 }

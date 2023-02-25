@@ -1,6 +1,7 @@
 package in.frol.frutils;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -232,5 +233,12 @@ class BigDecimalsTest {
     })
     void lessOrEquals(final BigDecimal val1, final BigDecimal val2) {
         assertTrue(BigDecimals.lessOrEquals(val1, val2));
+    }
+
+    @Test
+    void zero() {
+        assertTrue(BigDecimals.equals(BigDecimal.ZERO, BigDecimals.zero()));
+        assertTrue(BigDecimals.equals(new BigDecimal("0"), BigDecimals.zero()));
+        assertTrue(BigDecimals.equals(new BigDecimal("0.000"), BigDecimals.zero()));
     }
 }

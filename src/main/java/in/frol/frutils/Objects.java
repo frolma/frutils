@@ -9,7 +9,11 @@ import java.util.function.Supplier;
  * Methods à la SQL Server's COALESCE or ORACLE's NVL and other ISNULL functions,
  * in a convenient, concise and static "pack" for Java with lazy extensions.
  */
-public class Objects {
+public final class Objects {
+
+    private Objects() {
+        /* empty body */
+    }
 
     /**
      * Checks values for NotEqual Null('ne': null) by ordering
@@ -42,17 +46,31 @@ public class Objects {
      * <p>
      * neNull()
      */
-    public static <T, R> R neNull(final T firstValue,
+    public static <T, R> R neNull(final T value,
                                   final Function<T, R> functionForNotNull,
                                   final Supplier<R> supplierIfNull) {
-        if (firstValue == null) {
+        if (value == null) {
             return supplierIfNull == null
                     ? null
                     : supplierIfNull.get();
         }
         return functionForNotNull == null
                 ? null
-                : functionForNotNull.apply(firstValue);
+                : functionForNotNull.apply(value);
+    }
+
+    /**
+     * Init runnable if value equals null
+     */
+    public static <T> void neNull(final T value,
+                                  final Runnable runnableIfValueNull) {
+        if (value != null) {
+            return;
+        }
+        if (runnableIfValueNull == null) {
+            return;
+        }
+        runnableIfValueNull.run();
     }
 
     /**
@@ -61,14 +79,14 @@ public class Objects {
      * <p>
      * neNull()
      */
-    public static <T, R> R neNull(final T firstValue,
-                                  final Function<T, R> functionForNotNull) {
-        if (firstValue == null) {
+    public static <T, R> R neNull(final T Value,
+                                  final Function<T, R> functionIfValueNotNull) {
+        if (Value == null) {
             return null;
         }
-        return functionForNotNull == null
+        return functionIfValueNotNull == null
                 ? null
-                : functionForNotNull.apply(firstValue);
+                : functionIfValueNotNull.apply(Value);
     }
 
     /** Extended version of NotEqual Null - {@link Objects#neNull(Object, Function) } */

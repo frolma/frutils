@@ -17,6 +17,7 @@ as pure functions and avoiding creating a dozen objects to check a simple condit
   in a convenient, concise and static "pack" for Java with lazy extensions.
 - [Functions](#functions) - no-op lambdas, wrappers for non-checked exception and more
 - [BigDecimals](#bigdecimals) - checks, comparisons and so on
+- [Strings](#strings) - anything not found elsewhere for String or the method names seemed inappropriate
 - [Collections](#collections) - checks ifnull, empty and split list into chunks
 - [UtilDates](#utildates) - util.Date and datetime API converters
 
@@ -168,6 +169,32 @@ isNullOrZero(variable)
 neitherNullNorZero(variable)
 
 greaterOrEquals(variable1, variable2)
+```
+
+## Strings
+
+###### length, isBlank, notBlank isNumeric, isAlphaNumeric, isSignedNumeric, etc.
+
+```
+length(null)   == 0
+length("")     == 0
+length("  ")   == 2
+length("123")  == 3
+
+isAlphaNumeric(<all symbols are letter or digit>) == true
+notAlphaNumeric(<all symbols are letter or digit>) == false
+
+isNumeric(<any number (for floating point numbers the decimal separator is ".")>) == true
+isNumeric("123")         == true
+notNumeric(" 123")       == false
+
+isSignedNumeric("-123")  == true
+notSignedNumeric("-123") == false
+
+isBlank(null)     == true 
+isBlank("")       == true 
+notBlank("  ")    == false 
+isBlank("_")      == false 
 ```
 
 ## Collections

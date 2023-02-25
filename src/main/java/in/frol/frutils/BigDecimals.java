@@ -85,4 +85,9 @@ public final class BigDecimals {
     public static boolean lessOrEquals(final BigDecimal value1, final BigDecimal value2) {
         return COMPARATOR.compare(value1, value2) <= ZERO_INT;
     }
+
+    /**  */
+    public static BigDecimal zero() {
+        return BigDecimal.ZERO;
+    }
 }
