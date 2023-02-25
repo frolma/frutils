@@ -79,14 +79,14 @@ public final class Objects {
      * <p>
      * neNull()
      */
-    public static <T, R> R neNull(final T Value,
+    public static <T, R> R neNull(final T value,
                                   final Function<T, R> functionIfValueNotNull) {
-        if (Value == null) {
+        if (value == null) {
             return null;
         }
         return functionIfValueNotNull == null
                 ? null
-                : functionIfValueNotNull.apply(Value);
+                : functionIfValueNotNull.apply(value);
     }
 
     /** Extended version of NotEqual Null - {@link Objects#neNull(Object, Function) } */
