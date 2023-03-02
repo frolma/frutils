@@ -57,37 +57,73 @@ public final class BigDecimals {
     }
 
     /**  */
-    public static boolean equals(final BigDecimal value1, final BigDecimal value2) {
+    public static boolean eq(final BigDecimal value1, final BigDecimal value2) {
         return COMPARATOR.compare(value1, value2) == 0;
     }
 
     /**  */
-    public static boolean notEquals(final BigDecimal value1, final BigDecimal value2) {
-        return !equals(value1, value2);
+    public static boolean equals(final BigDecimal value1, final BigDecimal value2) {
+        return eq(value1, value2);
     }
 
     /**  */
-    public static boolean greater(final BigDecimal value1, final BigDecimal value2) {
+    public static boolean notEquals(final BigDecimal value1, final BigDecimal value2) {
+        return !eq(value1, value2);
+    }
+
+    /**  */
+    public static boolean ne(final BigDecimal value1, final BigDecimal value2) {
+        return !eq(value1, value2);
+    }
+
+    /**  */
+    public static boolean gt(final BigDecimal value1, final BigDecimal value2) {
         return COMPARATOR.compare(value1, value2) > ZERO_INT;
     }
 
     /**  */
-    public static boolean greaterOrEquals(final BigDecimal value1, final BigDecimal value2) {
+    public static boolean greater(final BigDecimal value1, final BigDecimal value2) {
+        return gt(value1, value2);
+    }
+
+    /**  */
+    public static boolean gte(final BigDecimal value1, final BigDecimal value2) {
         return COMPARATOR.compare(value1, value2) >= ZERO_INT;
     }
 
     /**  */
-    public static boolean less(final BigDecimal value1, final BigDecimal value2) {
+    public static boolean greaterOrEquals(final BigDecimal value1, final BigDecimal value2) {
+        return gte(value1, value2);
+    }
+
+    /**  */
+    public static boolean lt(final BigDecimal value1, final BigDecimal value2) {
         return COMPARATOR.compare(value1, value2) < ZERO_INT;
     }
 
     /**  */
-    public static boolean lessOrEquals(final BigDecimal value1, final BigDecimal value2) {
+    public static boolean less(final BigDecimal value1, final BigDecimal value2) {
+        return lt(value1, value2);
+    }
+
+    /**  */
+    public static boolean lte(final BigDecimal value1, final BigDecimal value2) {
         return COMPARATOR.compare(value1, value2) <= ZERO_INT;
+    }
+
+    /**  */
+    public static boolean lessOrEquals(final BigDecimal value1, final BigDecimal value2) {
+        return lte(value1, value2);
     }
 
     /**  */
     public static BigDecimal zero() {
         return BigDecimal.ZERO;
+    }
+
+    public static BigDecimal abs(final BigDecimal value) {
+        return isNegative(value)
+                ? value.negate()
+                : value;
     }
 }

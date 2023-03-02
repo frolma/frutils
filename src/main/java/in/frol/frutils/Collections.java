@@ -8,6 +8,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
 
+import static in.frol.frutils.Objects.ne;
+
 /**
  * Utility class for simple operations with Collections/Maps without
  * creating additional objects and improving code readability
@@ -27,6 +29,32 @@ public final class Collections {
     /** Check that the Collection contains any items and not null */
     public static boolean hasItems(final Collection<?> collection) {
         return !hasNoItems(collection);
+    }
+
+    /** Check that the Collection contains only one item */
+    public static boolean hasOneItem(final Collection<?> collection) {
+        if (hasNoItems(collection)) {
+            return false;
+        }
+        return collection.size() == 1;
+    }
+
+    /** Check that the Collection contains only one unique item */
+    public static boolean hasUniqueItem(final Collection<?> collection) {
+        if (hasNoItems(collection)) {
+            return false;
+        }
+        boolean alreadyFound = false;
+        Object unique = null;
+        for (Object current : collection) {
+            if (!alreadyFound) {
+                alreadyFound = true;
+                unique = current;
+            } else if (ne(unique, current)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /** Check that the Map doesn't contain any entries or null */

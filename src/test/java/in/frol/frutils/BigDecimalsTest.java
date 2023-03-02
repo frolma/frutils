@@ -121,6 +121,7 @@ class BigDecimalsTest {
     })
     void equalsTrue(final BigDecimal val1, final BigDecimal val2) {
         assertTrue(BigDecimals.equals(val1, val2));
+        assertTrue(BigDecimals.eq(val1, val2));
     }
 
     @ParameterizedTest
@@ -133,6 +134,7 @@ class BigDecimalsTest {
     })
     void equalsFalse(final BigDecimal val1, final BigDecimal val2) {
         assertFalse(BigDecimals.equals(val1, val2));
+        assertFalse(BigDecimals.eq(val1, val2));
     }
 
     @ParameterizedTest
@@ -146,6 +148,7 @@ class BigDecimalsTest {
     })
     void notEqualsTrue(final BigDecimal val1, final BigDecimal val2) {
         assertTrue(BigDecimals.notEquals(val1, val2));
+        assertTrue(BigDecimals.ne(val1, val2));
     }
 
     @ParameterizedTest
@@ -159,6 +162,7 @@ class BigDecimalsTest {
     })
     void notEqualsFalse(final BigDecimal val1, final BigDecimal val2) {
         assertFalse(BigDecimals.notEquals(val1, val2));
+        assertFalse(BigDecimals.ne(val1, val2));
     }
 
     @ParameterizedTest
@@ -173,6 +177,7 @@ class BigDecimalsTest {
     })
     void greater(final BigDecimal val1, final BigDecimal val2) {
         assertTrue(BigDecimals.greater(val1, val2));
+        assertTrue(BigDecimals.gt(val1, val2));
     }
 
     @ParameterizedTest
@@ -191,6 +196,7 @@ class BigDecimalsTest {
     })
     void greaterOrEquals(final BigDecimal val1, final BigDecimal val2) {
         assertTrue(BigDecimals.greaterOrEquals(val1, val2));
+        assertTrue(BigDecimals.gte(val1, val2));
     }
 
     @ParameterizedTest
@@ -209,6 +215,7 @@ class BigDecimalsTest {
     })
     void less(final BigDecimal val1, final BigDecimal val2) {
         assertTrue(BigDecimals.less(val1, val2));
+        assertTrue(BigDecimals.lt(val1, val2));
     }
 
 
@@ -233,12 +240,24 @@ class BigDecimalsTest {
     })
     void lessOrEquals(final BigDecimal val1, final BigDecimal val2) {
         assertTrue(BigDecimals.lessOrEquals(val1, val2));
+        assertTrue(BigDecimals.lte(val1, val2));
     }
 
     @Test
     void zero() {
         assertTrue(BigDecimals.equals(BigDecimal.ZERO, BigDecimals.zero()));
+        assertTrue(BigDecimals.eq(BigDecimal.ZERO, BigDecimals.zero()));
         assertTrue(BigDecimals.equals(new BigDecimal("0"), BigDecimals.zero()));
+        assertTrue(BigDecimals.eq(new BigDecimal("0"), BigDecimals.zero()));
         assertTrue(BigDecimals.equals(new BigDecimal("0.000"), BigDecimals.zero()));
+        assertTrue(BigDecimals.eq(new BigDecimal("0.000"), BigDecimals.zero()));
+    }
+
+    @Test
+    void abs() {
+        assertTrue(BigDecimals.eq(new BigDecimal("1"), BigDecimals.abs(new BigDecimal("1"))));
+        assertTrue(BigDecimals.eq(new BigDecimal("1"), BigDecimals.abs(new BigDecimal("-1"))));
+        assertTrue(BigDecimals.eq(new BigDecimal("9999.99999"), BigDecimals.abs(new BigDecimal("9999.99999"))));
+        assertTrue(BigDecimals.eq(new BigDecimal("9999.99999"), BigDecimals.abs(new BigDecimal("-9999.99999"))));
     }
 }

@@ -276,4 +276,26 @@ public final class Objects {
     public static boolean nonNull(Object object) {
         return object != null;
     }
+
+    /* not equals */
+    public static boolean ne(Object left, Object right) {
+        return !eq(left, right);
+    }
+
+    /* not equals */
+    public static boolean notEquals(Object left, Object right) {
+        return ne(left, right);
+    }
+
+    /* equals */
+    public static boolean eq(Object left, Object right) {
+        return left == right
+                || left != null
+                && left.equals(right);
+    }
+
+    /* equals */
+    public static boolean equals(Object left, Object right) {
+        return eq(left, right);
+    }
 }

@@ -1,5 +1,6 @@
 package in.frol.frutils;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -475,5 +476,21 @@ class ObjectsTest {
         assertEquals(1, supplierResult);
 
         assertArrayEquals(new int[]{1, 1, 0}, intArray);
+    }
+
+    @Test
+    void eqAndNe() {
+        Assertions.assertTrue(Objects.eq(1, 1));
+        Assertions.assertTrue(Objects.equals(1, 1));
+        Assertions.assertTrue(Objects.eq(1, 1));
+        Assertions.assertTrue(Objects.equals("123", "123"));
+        Assertions.assertTrue(Objects.eq(130, 130));
+        Assertions.assertTrue(Objects.equals("130", "130"));
+        Assertions.assertFalse(Objects.ne(1, 1));
+        Assertions.assertFalse(Objects.notEquals(1, 1));
+        Assertions.assertFalse(Objects.ne(1, 1));
+        Assertions.assertFalse(Objects.notEquals("123", "123"));
+        Assertions.assertFalse(Objects.ne(130, 130));
+        Assertions.assertFalse(Objects.notEquals("130", "130"));
     }
 }

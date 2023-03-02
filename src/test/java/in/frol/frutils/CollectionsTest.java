@@ -137,4 +137,25 @@ class CollectionsTest {
         assertEquals(END_INCLUSIVE.toString(), Collections.lastItem(STRING_LIST));
         assertEquals(END_INCLUSIVE, Collections.lastItem(INT_LIST));
     }
+
+    @Test
+    @SuppressWarnings("ALL")
+    void hasOneItem() {
+        List list = null;
+        assertFalse(Collections.hasOneItem(list));
+        assertFalse(Collections.hasOneItem(List.of()));
+        assertTrue(Collections.hasOneItem(List.of(0)));
+        assertFalse(Collections.hasOneItem(List.of(0, 0)));
+        assertFalse(Collections.hasOneItem(List.of(" ", " ")));
+    }
+
+    @Test
+    @SuppressWarnings("ALL")
+    void hasUniqueItem() {
+//        List list = null;
+//        assertFalse(Collections.hasUniqueItem(list));
+//        assertFalse(Collections.hasUniqueItem(List.of()));
+//        assertTrue(Collections.hasUniqueItem(List.of(0)));
+        assertTrue(Collections.hasUniqueItem(List.of(0, 0)));
+    }
 }
