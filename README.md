@@ -19,6 +19,7 @@ as pure functions and avoiding creating a dozen objects to check a simple condit
 - [BigDecimals](#bigdecimals) - checks, comparisons and so on
 - [Strings](#strings) - anything not found elsewhere for String or the method names seemed inappropriate
 - [Collections](#collections) - checks ifnull, empty and split list into chunks
+- [Booleans](#booleans)
 - [UtilDates](#utildates) - util.Date and datetime API converters
 
 **Just add the following snippet to dependencies:**
@@ -28,7 +29,7 @@ as pure functions and avoiding creating a dozen objects to check a simple condit
 <dependency>
     <groupId>in.frol</groupId>
     <artifactId>frutils</artifactId>
-    <version>0.0.4</version>
+    <version>0.0.5</version>
 </dependency>
 
 // Gradle Kotlin DSL
@@ -169,6 +170,9 @@ isNullOrZero(variable)
 neitherNullNorZero(variable)
 
 greaterOrEquals(variable1, variable2)
+
+// as well as
+eq(..), ne(..), gt(..), lt(..), gte(..), lte(..), lte(..), abs(.) 
 ```
 
 ## Strings
@@ -220,6 +224,25 @@ toChunks(list, chunkSize)
 toChunks(List.of(1,2,3,4,5), 3) == List.of(List.of(1,2,3), List.of(4,5)) 
 
 etc...
+```
+
+## Booleans
+
+```
+// if it is necessary to check the nullable Bool variable:
+if (!Boolean.TRUE.equals(object.getBoolean())) {
+
+// try this instead:
+if (neTrue(object.getBoolean()) {
+```
+```
+eqTrue(null)      // false
+eqTrue(falseVar)  // false
+eqTrue(trueVar)   // true
+
+neTrue(null)      // true
+neTrue(falseVar)  // true
+neTrue(trueVar)   // false
 ```
 
 ## UtilDates
