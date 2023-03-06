@@ -61,36 +61,6 @@ public final class Objects {
     }
 
     /**
-     * Init runnable if value equals null
-     */
-    public static <T> void neNull(final T value,
-                                  final Runnable runnableIfValueNull) {
-        if (value != null) {
-            return;
-        }
-        if (runnableIfValueNull == null) {
-            return;
-        }
-        runnableIfValueNull.run();
-    }
-
-    /**
-     * Applies the consumer to a non-null object
-     * <p>
-     * neNull()
-     */
-    public static <T> void neNull(final T value,
-                                  final Consumer<T> consumerInNotNull) {
-        if (value == null) {
-            return;
-        }
-        if (consumerInNotNull == null) {
-            return;
-        }
-        consumerInNotNull.accept(value);
-    }
-
-    /**
      * Applies the function/extractor to a non-null
      * object and returns the result otherwise null
      * <p>
@@ -219,6 +189,44 @@ public final class Objects {
             return current;
         }
         return null;
+    }
+
+    /**
+     * Init runnable if value equals null
+     */
+    public static <T> void neNull(final T value,
+                                  final Runnable runnableIfValueNull) {
+        if (value != null) {
+            return;
+        }
+        if (runnableIfValueNull == null) {
+            return;
+        }
+        runnableIfValueNull.run();
+    }
+
+    /** Alias for {@linkplain Objects#neNull(Object, Runnable)} */
+    public static <T> void runIfNull(final T value,
+                                     final Runnable runnableIfValueNull) {
+        if (value != null) {
+            return;
+        }
+        if (runnableIfValueNull == null) {
+            return;
+        }
+        runnableIfValueNull.run();
+    }
+
+    /** Applies the consumer to a non-null object */
+    public static <T> void consumeNeNull(final T value,
+                                         final Consumer<T> consumerInNotNull) {
+        if (value == null) {
+            return;
+        }
+        if (consumerInNotNull == null) {
+            return;
+        }
+        consumerInNotNull.accept(value);
     }
 
     /** {@code true} if all objects are {@code null} */

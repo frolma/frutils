@@ -463,6 +463,10 @@ class ObjectsTest {
 
         assertArrayEquals(new int[]{0, 0, 0}, intArray);
 
+        Objects.runIfNull("non null value", integerRunnable);
+
+        assertArrayEquals(new int[]{0, 0, 0}, intArray);
+
         Objects.neNull(null, integerRunnable);
 
         assertArrayEquals(new int[]{0, 1, 0}, intArray);
@@ -479,11 +483,11 @@ class ObjectsTest {
         assertArrayEquals(new int[]{1, 1, 0}, intArray);
 
         final Consumer<Integer> integerConsumer = val -> intArray[2] = val;
-        Objects.neNull(null, integerConsumer);
+        Objects.consumeNeNull(null, integerConsumer);
 
         assertArrayEquals(new int[]{1, 1, 0}, intArray);
 
-        Objects.neNull(7, integerConsumer);
+        Objects.consumeNeNull(7, integerConsumer);
 
         assertArrayEquals(new int[]{1, 1, 7}, intArray);
     }

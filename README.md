@@ -29,11 +29,11 @@ as pure functions and avoiding creating a dozen objects to check a simple condit
 <dependency>
     <groupId>in.frol</groupId>
     <artifactId>frutils</artifactId>
-    <version>0.0.6</version>
+    <version>1.0.0</version>
 </dependency>
 
 // Gradle Kotlin DSL
-implementation("in.frol:frutils:0.0.6")
+implementation("in.frol:frutils:1.0.0")
 ```
 
 ## Objects
