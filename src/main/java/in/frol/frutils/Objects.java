@@ -1,5 +1,6 @@
 package in.frol.frutils;
 
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -71,6 +72,22 @@ public final class Objects {
             return;
         }
         runnableIfValueNull.run();
+    }
+
+    /**
+     * Applies the consumer to a non-null object
+     * <p>
+     * neNull()
+     */
+    public static <T> void neNull(final T value,
+                                  final Consumer<T> consumerInNotNull) {
+        if (value == null) {
+            return;
+        }
+        if (consumerInNotNull == null) {
+            return;
+        }
+        consumerInNotNull.accept(value);
     }
 
     /**
@@ -289,9 +306,7 @@ public final class Objects {
 
     /* equals */
     public static boolean eq(Object left, Object right) {
-        return left == right
-                || left != null
-                && left.equals(right);
+        return java.util.Objects.equals(left, right);
     }
 
     /* equals */

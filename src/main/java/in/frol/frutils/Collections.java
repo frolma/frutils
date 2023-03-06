@@ -39,6 +39,14 @@ public final class Collections {
         return collection.size() == 1;
     }
 
+    /** Check that the Collection contains more than one item */
+    public static boolean hasMoreOneItem(final Collection<?> collection) {
+        if (hasNoItems(collection)) {
+            return false;
+        }
+        return collection.size() > 1;
+    }
+
     /** Check that the Collection contains only one unique item */
     public static boolean hasUniqueItem(final Collection<?> collection) {
         if (hasNoItems(collection)) {

@@ -151,6 +151,17 @@ class CollectionsTest {
 
     @Test
     @SuppressWarnings("ALL")
+    void hasMoreOneItem() {
+        List list = null;
+        assertFalse(Collections.hasMoreOneItem(list));
+        assertFalse(Collections.hasMoreOneItem(List.of()));
+        assertFalse(Collections.hasMoreOneItem(List.of(0)));
+        assertTrue(Collections.hasMoreOneItem(List.of(0, 0)));
+        assertTrue(Collections.hasMoreOneItem(List.of(" ", " ")));
+    }
+
+    @Test
+    @SuppressWarnings("ALL")
     void hasUniqueItem() {
 //        List list = null;
 //        assertFalse(Collections.hasUniqueItem(list));

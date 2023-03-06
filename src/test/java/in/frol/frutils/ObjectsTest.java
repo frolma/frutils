@@ -11,6 +11,7 @@ import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.math.BigDecimal;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
@@ -452,7 +453,7 @@ class ObjectsTest {
     }
 
     @Test
-    void neNullRunnableAndSupplier() {
+    void neNullRunnableAndSupplierAndConsumer() {
         final int[] intArray = new int[3];
 
         assertArrayEquals(new int[]{0, 0, 0}, intArray);
@@ -476,6 +477,15 @@ class ObjectsTest {
         assertEquals(1, supplierResult);
 
         assertArrayEquals(new int[]{1, 1, 0}, intArray);
+
+        final Consumer<Integer> integerConsumer = val -> intArray[2] = val;
+        Objects.neNull(null, integerConsumer);
+
+        assertArrayEquals(new int[]{1, 1, 0}, intArray);
+
+        Objects.neNull(7, integerConsumer);
+
+        assertArrayEquals(new int[]{1, 1, 7}, intArray);
     }
 
     @Test
