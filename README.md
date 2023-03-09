@@ -107,6 +107,13 @@ neNull(nonNullRef, () -> getNullRef(), () -> getDefaultRef2(), ...); //result: n
 
 ```
 allNull(..), allNotNull(..), anyNotNull(..), anyNull(..) ... etc.
+
+castOr(<val>, <targetType>, <defaultValue>)
+castOrGet(<val>, <targetType>, <supplier with default value>)
+
+ListBlobItem item = retrieveBlob();
+CloudBlockBlob blockBlob = castOr(item, CloudBlockBlob.class, getDefaultBlockBlob());
+CloudPageBlob pageBlob = castOrGet(item, CloudPageBlob.class, some::getDefaultPageBlob);
 ```
 
 ## Functions

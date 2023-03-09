@@ -132,6 +132,13 @@ class ObjectsTest {
         );
     }
 
+    private static A c(C c) {
+        c.valA = "a";
+        c.valB = "b";
+        c.valC = "c";
+        return c;
+    }
+
     @ParameterizedTest
     @CsvSource(value = {
             "null, string,  string",
@@ -506,5 +513,44 @@ class ObjectsTest {
         Assertions.assertFalse(Objects.notEquals("123", "123"));
         Assertions.assertFalse(Objects.ne(130, 130));
         Assertions.assertFalse(Objects.notEquals("130", "130"));
+    }
+
+    @Test
+    void castToOr() {
+        Object value1 = "1";
+        Integer default1 = 2;
+
+        assertEquals(default1, Objects.castOr(value1, Integer.class, default1));
+        assertEquals(default1, Objects.castOrGet(value1, Integer.class, () -> default1));
+
+        Object value2 = 1;
+        String default2 = "default";
+
+        assertEquals(default2, Objects.castOr(value2, String.class, default2));
+        assertEquals(default2, Objects.castOrGet(value2, String.class, () -> default2));
+
+        Object value3 = 44L;
+        Long default3 = 45L;
+
+        assertEquals(44L, Objects.castOr(value3, Long.class, default3));
+        assertEquals(44L, Objects.castOrGet(value3, Long.class, () -> default3));
+
+        C c = new C();
+        A a = c(c);
+
+        assertEquals(c, Objects.castOr(a, B.class, null));
+        assertEquals(c, Objects.castOr(a, C.class, null));
+    }
+
+    static class A {
+        String valA;
+    }
+
+    static class B extends A {
+        String valB;
+    }
+
+    static class C extends B {
+        String valC;
     }
 }

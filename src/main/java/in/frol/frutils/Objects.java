@@ -332,13 +332,36 @@ public final class Objects {
      * @param defaultValue default value to be returned if the cast fails.
      * @return cast object if the cast is successful, otherwise the default value.
      */
-    public static <T> T castToOr(final Object value,
-                                 final Class<T> targetType,
-                                 final T defaultValue) {
-        if (value == null
-                || !targetType.isAssignableFrom(value.getClass())) {
-            return defaultValue;
+    public static <T> T castOr(final Object value,
+                               final Class<T> targetType,
+                               final T defaultValue) {
+        if (nonNull(value)
+                && targetType.isAssignableFrom(value.getClass())) {
+            return targetType.cast(value);
         }
-        return targetType.cast(value);
+        return defaultValue;
+    }
+
+    /**
+     * Casts object to the given type, if the cast is not possible,
+     * returns the default supplier result provided.
+     *
+     * @param <T>             target type to cast to.
+     * @param value           object to be cast.
+     * @param targetType      target type to cast to.
+     * @param defaultSupplier default supplier result to be returned if the cast fails.
+     * @return cast object if the cast is successful, otherwise the default value.
+     */
+    public static <T> T castOrGet(final Object value,
+                                  final Class<T> targetType,
+                                  final Supplier<T> defaultSupplier) {
+        if (nonNull(value)
+                && targetType.isAssignableFrom(value.getClass())) {
+            return targetType.cast(value);
+        }
+        if (isNull(defaultSupplier)) {
+            return null;
+        }
+        return defaultSupplier.get();
     }
 }
