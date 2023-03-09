@@ -321,4 +321,24 @@ public final class Objects {
     public static boolean equals(Object left, Object right) {
         return eq(left, right);
     }
+
+    /**
+     * Casts object to the given type, if the cast is not possible,
+     * returns the default value provided.
+     *
+     * @param <T>          target type to cast to.
+     * @param value        object to be cast.
+     * @param targetType   target type to cast to.
+     * @param defaultValue default value to be returned if the cast fails.
+     * @return cast object if the cast is successful, otherwise the default value.
+     */
+    public static <T> T castToOr(final Object value,
+                                 final Class<T> targetType,
+                                 final T defaultValue) {
+        if (value == null
+                || !targetType.isAssignableFrom(value.getClass())) {
+            return defaultValue;
+        }
+        return targetType.cast(value);
+    }
 }
