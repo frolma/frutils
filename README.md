@@ -29,11 +29,11 @@ as pure functions and avoiding creating a dozen objects to check a simple condit
 <dependency>
     <groupId>in.frol</groupId>
     <artifactId>frutils</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
 </dependency>
 
 // Gradle Kotlin DSL
-implementation("in.frol:frutils:1.0.0")
+implementation("in.frol:frutils:1.0.1")
 ```
 
 ## Objects
@@ -242,6 +242,7 @@ if (!Boolean.TRUE.equals(object.getBoolean())) {
 // try this instead:
 if (neTrue(object.getBoolean()) {
 ```
+
 ```
 eqTrue(null)      // false
 eqTrue(falseVar)  // false
@@ -250,6 +251,15 @@ eqTrue(trueVar)   // true
 neTrue(null)      // true
 neTrue(falseVar)  // true
 neTrue(trueVar)   // false
+
+getIfTrue(<condition>, <value if condition eq true>)
+getIfNeTrue(<condition>, <value if condition ne true>)
+
+supplyIfTrue(<condition>, <supplier if condition eq true>)
+supplyIfNeTrue(<condition>, <supplier if condition ne true>)
+
+runIfTrue(<condition>, <runnable if condition eq true>)
+runIfNeTrue(<condition>, <runnable if condition ne true>)
 ```
 
 ## UtilDates
