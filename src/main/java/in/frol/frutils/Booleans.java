@@ -33,7 +33,7 @@ public class Booleans {
         return Boolean.TRUE.equals(value);
     }
 
-    public static <T> T getIfFalse(final Boolean condition, final T valueIfFalse) {
+    public static <T> T getIfNeTrue(final Boolean condition, final T valueIfFalse) {
         return neTrue(condition)
                 ? valueIfFalse
                 : null;
@@ -45,7 +45,7 @@ public class Booleans {
                 : null;
     }
 
-    public static <T> T supplyIfFalse(final Boolean condition, final Supplier<T> supplierIfFalse) {
+    public static <T> T supplyIfNeTrue(final Boolean condition, final Supplier<T> supplierIfFalse) {
         if (neTrue(condition)
                 && nonNull(supplierIfFalse)) {
             return supplierIfFalse.get();
@@ -61,7 +61,7 @@ public class Booleans {
         return null;
     }
 
-    public static void runIfFalse(final Boolean condition, final Runnable runnableIfFalse) {
+    public static void runIfNeTrue(final Boolean condition, final Runnable runnableIfFalse) {
         if (neTrue(condition)
                 && nonNull(runnableIfFalse)) {
             runnableIfFalse.run();

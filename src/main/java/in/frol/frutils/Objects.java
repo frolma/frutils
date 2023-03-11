@@ -156,9 +156,6 @@ public final class Objects {
     /** Varargs version of NotEqual Null {@link Objects#neNull(Object, Object) } */
     @SafeVarargs
     public static <T> T neNull(final T... objects) {
-        if (objects == null) {
-            return null;
-        }
         for (final T current : objects) {
             if (current == null) {
                 continue;
@@ -297,19 +294,9 @@ public final class Objects {
         return obj == null;
     }
 
-    /** Alias for Objects#isNull */
-    public static boolean eqNull(Object obj) {
-        return isNull(obj);
-    }
-
     /** Returns {@code true} if the object is non-null */
     public static boolean nonNull(Object object) {
         return object != null;
-    }
-
-    /** Alias for Objects#nonNull */
-    public static boolean neNull(Object object) {
-        return nonNull(object);
     }
 
     /* not equals */

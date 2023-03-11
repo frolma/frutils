@@ -23,6 +23,14 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @DisplayName("java.util.Date Date Utils:")
 class FunctionsTest {
 
+    public static void catchRunnable(Runnable run) {
+        try {
+            run.run();
+        } catch (Exception e) {
+            /* do nothing */
+        }
+    }
+
     @Test
     @DisplayName("Noo operation stubs:")
     void noopFunctions() {
@@ -74,4 +82,27 @@ class FunctionsTest {
         Assertions.assertTrue(true);
     }
 
+    @Test
+    @SuppressWarnings("ALL")
+    void uncheckedFunctionsThrow() {
+        // compile checks
+        var object = new TestClass();
+        catchRunnable(() -> Stream.of(new TestA()).peek(unchecked(object::voidWithInputUncheckedExceptionThrow)));
+        catchRunnable(() -> Stream.of(new TestA()).peek(uncheckedConsumer(object::voidWithInputUncheckedExceptionThrow)));
+        catchRunnable(() -> Stream.of(new TestA()).map(unchecked(object::withInputUncheckedExceptionThrow)));
+        catchRunnable(() -> Stream.of(new TestA()).map(val -> uncheckedSupplier(object::withReturnUncheckedExceptionThrow).get()));
+        catchRunnable(() -> Stream.of(new TestA()).map(uncheckedFunction(object::withInputUncheckedExceptionThrow)));
+        catchRunnable(() -> Stream.of(new TestA()).forEach(unchecked(object::voidWithInputUncheckedExceptionThrow)));
+        catchRunnable(() -> unchecked(object::voidWith2InputUncheckedExceptionThrow).accept(null, null));
+        catchRunnable(() -> uncheckedBiConsumer(object::voidWith2InputUncheckedExceptionThrow).accept(null, null));
+        catchRunnable(() -> unchecked(object::with2InputUncheckedExceptionThrow).apply(null, null));
+        catchRunnable(() -> uncheckedBiFunction(object::with2InputUncheckedExceptionThrow).apply(null, null));
+        catchRunnable(() -> uncheckedFunction(object::withInputUncheckedExceptionThrow).apply(null));
+        catchRunnable(() -> uncheckedSupplier(object::withReturnUncheckedExceptionThrow).get());
+        catchRunnable(() -> object.biConsumer(unchecked(object::voidWith2InputUncheckedExceptionThrow)));
+        catchRunnable(() -> object.biConsumer(uncheckedBiConsumer(object::voidWith2InputUncheckedExceptionThrow)));
+        catchRunnable(() -> object.biFunction(unchecked(object::with2InputUncheckedExceptionThrow)));
+        catchRunnable(() -> object.biFunction(uncheckedBiFunction(object::with2InputUncheckedExceptionThrow)));
+        Assertions.assertTrue(true);
+    }
 }

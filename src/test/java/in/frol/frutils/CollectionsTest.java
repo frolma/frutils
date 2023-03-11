@@ -10,6 +10,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -89,6 +90,8 @@ class CollectionsTest {
         var chunks = Collections.toChunks(INT_LIST, 10);
         assertEquals(9, chunks.size());
         assertEquals(INT_LIST.subList(0, 10), chunks.get(0));
+        assertNull(Collections.toChunks(null, 10));
+        assertEquals(List.of(), Collections.toChunks(List.of(), 10));
     }
 
     @Test
@@ -106,6 +109,17 @@ class CollectionsTest {
         assertNull(Collections.firstItem(Set.of()));
         assertEquals(START_INCLUSIVE.toString(), Collections.firstItem(STRING_SET));
         assertEquals(START_INCLUSIVE, Collections.firstItem(INT_SET));
+        TreeSet treeSet = new TreeSet();
+        assertNull(Collections.firstItem(treeSet));
+        treeSet.add(1);
+        assertEquals(START_INCLUSIVE, Collections.firstItem(treeSet));
+        assertEquals(START_INCLUSIVE, Collections.lastItem(treeSet));
+        treeSet.add(2);
+        assertEquals(START_INCLUSIVE, Collections.firstItem(treeSet));
+        assertEquals(2, Collections.lastItem(treeSet));
+        treeSet.add(3);
+        assertEquals(START_INCLUSIVE, Collections.firstItem(treeSet));
+        assertEquals(3, Collections.lastItem(treeSet));
     }
 
     @Test
@@ -163,10 +177,11 @@ class CollectionsTest {
     @Test
     @SuppressWarnings("ALL")
     void hasUniqueItem() {
-//        List list = null;
-//        assertFalse(Collections.hasUniqueItem(list));
-//        assertFalse(Collections.hasUniqueItem(List.of()));
-//        assertTrue(Collections.hasUniqueItem(List.of(0)));
+        List list = null;
+        assertFalse(Collections.hasUniqueItem(list));
+        assertFalse(Collections.hasUniqueItem(List.of()));
+        assertFalse(Collections.hasUniqueItem(List.of(0, 1)));
+        assertTrue(Collections.hasUniqueItem(List.of(0)));
         assertTrue(Collections.hasUniqueItem(List.of(0, 0)));
     }
 }

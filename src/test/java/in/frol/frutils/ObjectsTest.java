@@ -19,6 +19,7 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.params.provider.Arguments.of;
 
@@ -64,6 +65,9 @@ class ObjectsTest {
 
     static Stream<Arguments> sourceTestNeNullWithFunction3() {
         return Stream.of(
+                of(TEST_OBJECT_B, null, null, null, null),
+                of(TEST_OBJECT_B, TEST_FUNCTION_A_IF_B_OR_NULL, null, null, null),
+                of(TEST_OBJECT_A, TEST_FUNCTION_B_IF_A_OR_NULL, TEST_FUNCTION_C_IF_B_OR_NULL, null, null),
                 of(null, null, null, null, null),
                 of(null, TEST_FUNCTION_B_IF_A_OR_NULL, TEST_FUNCTION_C_IF_B_OR_NULL, TEST_FUNCTION_D_IF_C_OR_NULL, null),
                 of(TEST_OBJECT_B, TEST_FUNCTION_B_IF_A_OR_NULL, TEST_FUNCTION_C_IF_B_OR_NULL, TEST_FUNCTION_D_IF_C_OR_NULL, null),
@@ -73,6 +77,8 @@ class ObjectsTest {
 
     static Stream<Arguments> sourceTestNeNullWithFunction2() {
         return Stream.of(
+                of(TEST_OBJECT_B, null, null, null),
+                of(TEST_OBJECT_B, TEST_FUNCTION_A_IF_B_OR_NULL, null, null),
                 of(null, null, null, null),
                 of(null, TEST_FUNCTION_B_IF_A_OR_NULL, TEST_FUNCTION_C_IF_B_OR_NULL, null),
                 of(TEST_OBJECT_B, TEST_FUNCTION_B_IF_A_OR_NULL, TEST_FUNCTION_C_IF_B_OR_NULL, null),
@@ -183,6 +189,23 @@ class ObjectsTest {
         assertEquals(result, Objects.neNull(val, function1, function2, function3));
     }
 
+    @Test
+    void testNeNullWithFunction3Null() {
+        Integer val = 1;
+        Function<Integer, String> intToString = intVal -> "1";
+        Function<Integer, String> intToStringNull = null;
+        Function<String, Long> stringToLong = stringVal -> 2L;
+        Function<String, Long> stringToLongNull = null;
+        Function<String, Long> stringToLongNullNull = stringVal -> null;
+        Function<Long, BigDecimal> longToBigDecimal = BigDecimal::valueOf;
+        Function<Long, BigDecimal> longToBigDecimalNull = null;
+        assertEquals(new BigDecimal(2), Objects.neNull(val, intToString, stringToLong, longToBigDecimal));
+        assertNull(Objects.neNull(val, intToString, stringToLong, longToBigDecimalNull));
+        assertNull(Objects.neNull(val, intToString, stringToLongNull, longToBigDecimalNull));
+        assertNull(Objects.neNull(val, intToString, stringToLongNullNull, longToBigDecimalNull));
+        assertNull(Objects.neNull(val, intToStringNull, stringToLongNull, longToBigDecimalNull));
+    }
+
     @SuppressWarnings("ALL")
     @ParameterizedTest
     @MethodSource("sourceTestNeNullWithSupplier")
@@ -251,6 +274,17 @@ class ObjectsTest {
         assertEquals(result, Objects.neNull(val1, val2, val3, val4));
     }
 
+    @Test
+    void neNullVarArg() {
+        assertNull(Objects.neNull());
+    }
+
+    @Test
+    void neNullVarArgNull() {
+        int[] val = null;
+        assertNull(Objects.neNull(val));
+    }
+
     @SuppressWarnings("ALL")
     @ParameterizedTest
     @MethodSource("sourceTestNeNullWithSupplierVarArgs")
@@ -271,6 +305,11 @@ class ObjectsTest {
         if (supplier.length == 4) {
             assertEquals(result, Objects.neNull(val, supplier[0], supplier[1], supplier[2], supplier[3]));
         }
+    }
+
+    @Test
+    void testNeNullWithSupplierVarArg() {
+        assertNull(Objects.neNull(null, () -> null, () -> null, () -> null, () -> null));
     }
 
     @ParameterizedTest
@@ -447,6 +486,12 @@ class ObjectsTest {
         assertFalse(Objects.allNotNull(val1, val2, val3));
     }
 
+    @Test
+    void allNotNullNull() {
+        //noinspection ConstantValue,ConfusingArgumentToVarargsMethod
+        assertFalse(Objects.allNotNull(null));
+    }
+
     @ParameterizedTest
     @ValueSource(strings = {"0.", ".0", "0.0", "0.0", "1", "0"})
     void notNullTrue(final BigDecimal value) {
@@ -497,6 +542,9 @@ class ObjectsTest {
         Objects.consumeNeNull(7, integerConsumer);
 
         assertArrayEquals(new int[]{1, 1, 7}, intArray);
+
+        Objects.runIfNull("non null value", null);
+        Objects.runIfNull(null, integerRunnable);
     }
 
     @Test
@@ -522,6 +570,7 @@ class ObjectsTest {
 
         assertEquals(default1, Objects.castOr(value1, Integer.class, default1));
         assertEquals(default1, Objects.castOrGet(value1, Integer.class, () -> default1));
+        assertNull(Objects.castOrGet(value1, Integer.class, null));
 
         Object value2 = 1;
         String default2 = "default";

@@ -3,6 +3,7 @@ package in.frol.frutils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
@@ -123,7 +124,9 @@ class StringsTest {
                 of("0.121212g", false),
                 of("0.121212e", false),
                 of("0,121212", false),
-                of("325,4343", false)
+                of("325,4343", false),
+                of("--325,4343", false),
+                of("..325,4343", false)
         );
     }
 
@@ -192,5 +195,19 @@ class StringsTest {
     void isAlphaNumeric(String value, boolean expected) {
         assertEquals(expected, Strings.isAlphaNumeric(value));
         assertEquals(!expected, Strings.notAlphaNumeric(value));
+    }
+
+    @DisplayName("length:")
+    @ParameterizedTest
+    @CsvSource(value = {
+            "9, stringify",
+            "8, stringif",
+            "3, str",
+            "2, st",
+            "1, s",
+            "0, "
+    })
+    void length(int expected, String value) {
+        assertEquals(expected, Strings.length(value));
     }
 }
