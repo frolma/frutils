@@ -297,9 +297,19 @@ public final class Objects {
         return obj == null;
     }
 
+    /** Alias for Objects#isNull */
+    public static boolean eqNull(Object obj) {
+        return isNull(obj);
+    }
+
     /** Returns {@code true} if the object is non-null */
     public static boolean nonNull(Object object) {
         return object != null;
+    }
+
+    /** Alias for Objects#nonNull */
+    public static boolean neNull(Object object) {
+        return nonNull(object);
     }
 
     /* not equals */
