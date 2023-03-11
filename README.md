@@ -1,7 +1,7 @@
 # :tangerine:Frutils: simple utility library for Java
 
 [![Maven Central](https://img.shields.io/maven-central/v/in.frol/frutils.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22in.frol%22%20AND%20a:%22frutils%22)
-[![Coverage Status](https://coveralls.io/repos/github/frolma/frutils/badge.svg)](https://coveralls.io/github/frolma/frutils)
+[![Coverage Status](https://coveralls.io/repos/github/frolma/frutils/badge.svg?branch=main)](https://coveralls.io/github/frolma/frutils?branch=main)
 ![GitHub](https://img.shields.io/github/license/frolma/frutils)
 
 The library, with its simple methods/utilities,
