@@ -20,6 +20,7 @@ class BooleansTest {
     }, nullValues = "null")
     void neTrue(Boolean param, boolean expected) {
         assertEquals(expected, Booleans.neTrue(param));
+        assertEquals(expected, Booleans.not(param));
     }
 
     @ParameterizedTest
@@ -30,6 +31,7 @@ class BooleansTest {
     }, nullValues = "null")
     void eqTrue(Boolean param, boolean expected) {
         assertEquals(expected, Booleans.eqTrue(param));
+        assertEquals(expected, Booleans.is(param));
     }
 
     @Test

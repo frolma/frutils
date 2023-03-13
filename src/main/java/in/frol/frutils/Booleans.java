@@ -20,6 +20,11 @@ public class Booleans {
         return !eqTrue(value);
     }
 
+    /* Alias for {@linkplain Booleans#neTrue()} */
+    public static boolean not(final Boolean value) {
+        return neTrue(value);
+    }
+
     /**
      * <pre>
      * if it is necessary to check the nullable Bool variable
@@ -31,6 +36,11 @@ public class Booleans {
      */
     public static boolean eqTrue(final Boolean value) {
         return Boolean.TRUE.equals(value);
+    }
+
+    /* Alias for {@linkplain Booleans#eqTrue()} */
+    public static boolean is(final Boolean value) {
+        return eqTrue(value);
     }
 
     public static <T> T getIfNeTrue(final Boolean condition, final T valueIfFalse) {
